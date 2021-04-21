@@ -7,6 +7,8 @@ import { createFilmCardTemplate }       from './view/film-card.js';
 import { createButtonShowMoreTemplate } from './view/button-show-more.js';
 import { createPopupAboutFilmTemplate } from './view/popup-about-film.js';
 
+import { generateFilmCard }             from './mock/fake-film-card.js';
+
 
 // ----------- CONSTANTS -----------
 const ELEMENT_PLACE = 'beforeend';
@@ -73,9 +75,13 @@ render(filmsSection, createFilmsListExtraTemplate(FilmsListExtraId.MOST_COMMENTE
  */
 const filmsListAll = filmsSection.querySelector('#all-movies');
 const filmsListContainer = filmsListAll.querySelector('.films-list__container');
+
+// *** Array with temporary film cards ***
+const filmCards = new Array(FILMS_COUNT).fill().map(generateFilmCard);
 for (let i = 0; i < FILMS_COUNT; i++) {
-  render(filmsListContainer, createFilmCardTemplate(), ELEMENT_PLACE);
+  render(filmsListContainer, createFilmCardTemplate(filmCards[i]), ELEMENT_PLACE);
 }
+
 
 // *** Rendering of «Show more» button ***
 render(filmsListAll, createButtonShowMoreTemplate(), ELEMENT_PLACE);
