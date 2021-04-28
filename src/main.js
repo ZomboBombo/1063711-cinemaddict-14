@@ -18,7 +18,7 @@ const ZERO_LENGTH = 0;
 const ELEMENT_PLACE = 'beforeend';
 const POPUP_PLACE = 'afterend';
 
-const FILMS_COUNT = 7;
+const FILMS_COUNT = 17;
 const MAX_SHOWN_FILMS_COUNT = 5;
 const EXTRA_FILMS_COUNT = 2;
 
@@ -103,7 +103,7 @@ function filmCardsRendering () {
   }
 
   filmCards.splice(FIRST_ARRAY_ELEMENT, filmCardsToRender);
-};
+}
 
 // *** First call of function for film cards rendering ***
 filmCardsRendering();
@@ -130,7 +130,6 @@ for (let i = 0; i < EXTRA_FILMS_COUNT; i++) {
 render(siteMainFooter, createPopupAboutFilmTemplate(), POPUP_PLACE);
 
 
-
 /*
  * *** The logic of displaying additional movie cards when you click on the "Show more" button ***
  */
@@ -147,6 +146,6 @@ function showMoreFilmCards (clickEvt) {
     showMoreButton.style = DISPLAY_NONE;
     showMoreButton.removeEventListener('click', showMoreFilmCards);
   }
-};
+}
 
 showMoreButton.addEventListener('click', showMoreFilmCards);
