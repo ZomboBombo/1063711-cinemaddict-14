@@ -1,0 +1,25 @@
+import dayjs from 'dayjs';
+
+
+/*
+ * *** Util function to generate a random number from a range
+ * *** Source: https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
+ */
+export const getRandomInteger = (a = 0, b = 1) => {
+  const lower = Math.ceil(Math.min(a, b));
+  const upper = Math.floor(Math.max(a, b));
+
+  return Math.floor(lower + Math.random() * (upper - lower + 1));
+};
+
+
+// *** Boolean flag: is property active... ***
+export const isActive = () => {
+  return Boolean(getRandomInteger(0, 1));
+};
+
+
+// *** Function for humanization date ***
+export const humanizeDate = (dateValue, dateFormat) => {
+  return dayjs(dateValue).format(dateFormat);
+};

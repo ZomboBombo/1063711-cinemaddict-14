@@ -1,6 +1,10 @@
 export const createPopupAboutFilmTemplate = () => {
+  /*
+   * *** Временно добавлено инлайновое св-во "display: none":
+   * *** чтобы попап не мешал при разработке
+   */
   return `
-    <section class="film-details">
+    <section style="display: none;" class="film-details">
       <form class="film-details__inner" action="" method="get">
         <div class="film-details__top-container">
           <div class="film-details__close">
