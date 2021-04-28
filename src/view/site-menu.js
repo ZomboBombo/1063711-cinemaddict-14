@@ -1,4 +1,4 @@
-const createSiteMenuFilterTemplate = (filter, isActive) => {
+const createSiteMenuFilterTemplate = (filter) => {
   const { name, count } = filter;
 
   return (

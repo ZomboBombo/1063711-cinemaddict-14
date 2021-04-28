@@ -1,4 +1,4 @@
-import { humanizeDate } from '../utils.js'
+import { humanizeDate } from '../utils.js';
 
 
 export const createFilmCardTemplate = (filmCard) => {
