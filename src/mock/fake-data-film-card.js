@@ -13,14 +13,18 @@ const MIN_RATE = 0;
 const MAX_RATE = 10;
 const SYMBOLS_COUNT_AFTER_COMMA = 1;
 
-const MIN_MANUFACTURE_DATE = 1960;
-const MAX_MANUFACTURE_DATE = 2021;
+const MIN_SCENARISTS_COUNT = 1;
+const MAX_SCENARISTS_COUNT = 4;
 
-const MAX_DAYS_GAP = 7;
+const MIN_STARS_COUNT = 2;
+const MAX_STARS_COUNT = 10;
 
-const FIRST_LETTER_INDEX = 0;
-const MAX_DESCRIPTION_LENGTH = 139;
-const ELLIPSIS = '...';
+const YEARS_GAP = 60;
+
+const HOURS_GAP = 3;
+
+const MIN_AGE_RATE = 0;
+const MAX_AGE_RATE = 18;
 
 
 /*
@@ -69,10 +73,109 @@ const getFilmRate = () => {
 
 
 /*
+ * *** Function to generate a film producer
+ */
+const getFilmProducer = () => {
+  const filmProducers = [
+    'Джерри Брукхаймер',
+    'Джордж Лукас',
+    'Майкл Бэй',
+    'Тайлер Перри',
+    'Стивен Спилберг',
+    'Джеймс Кэмерон',
+  ];
+
+  return filmProducers[getRandomInteger(FIRST_ARRAY_ELEMENT_INDEX, filmProducers.length - ARRAY_LENGTH_SHIFT)];
+};
+
+
+/*
+ * *** Function to generate a film scenarists
+ */
+const getFilmScenarists = () => {
+  const filmScenarists = [
+    'Билли Уайлдер',
+    'Итан и Джоэл Коэны',
+    'Роберт Таун',
+    'Квентин Тарантино',
+    'Фрэнсис Форд Коппола',
+    'Уильям Голдман',
+    'Чарли Кауфман',
+    'Вуди Аллен',
+  ];
+
+  /*
+   * --- Based on the existing array of scenarists (filmScenarists),
+   * --- create a new one using the «Set» object
+   */
+  const filmScenaristsArray = new Set();
+  const randomScenaristsListCount = getRandomInteger(MIN_SCENARISTS_COUNT, MAX_SCENARISTS_COUNT);
+
+
+  /*
+   * --- Using the add-method of the "Set" object, we generate an array of random scenarists.
+   * --- Due to the peculiarity of the add-method, only unique values appear inside the array.
+   */
+  for (let i = 0; i < randomScenaristsListCount; i++) {
+    const randomScenarist = filmScenarists[getRandomInteger(FIRST_ARRAY_ELEMENT_INDEX, filmScenarists.length - ARRAY_LENGTH_SHIFT)];
+    filmScenaristsArray.add(randomScenarist);
+  }
+
+  const filmScenaristsList = Array.from(filmScenaristsArray).join(', ');
+
+  return filmScenaristsList;
+};
+
+
+/*
+ * *** Function to generate a film stars
+ */
+const getFilmStars = () => {
+  const filmStars = [
+    'Киану Ривз',
+    'Роберт де Ниро',
+    'Леонардо ДиКаприо',
+    'Энн Хеттэуэй',
+    'Марго Робби',
+    'Уилл Смит',
+    'Эндрю Гарфилд',
+    'Лена Хиди',
+    'Эмилия Кларк',
+    'Джейсон Моммоа',
+    'Настасья Самбурская',
+  ];
+
+  /*
+   * --- Based on the existing array of stars (filmStars),
+   * --- create a new one using the «Set» object
+   */
+  const filmStarsArray = new Set();
+  const randomStarsListCount = getRandomInteger(MIN_STARS_COUNT, MAX_STARS_COUNT);
+
+
+  /*
+   * --- Using the add-method of the "Set" object, we generate an array of random stars.
+   * --- Due to the peculiarity of the add-method, only unique values appear inside the array.
+   */
+  for (let i = 0; i < randomStarsListCount; i++) {
+    const randomStar = filmStars[getRandomInteger(FIRST_ARRAY_ELEMENT_INDEX, filmStars.length - ARRAY_LENGTH_SHIFT)];
+    filmStarsArray.add(randomStar);
+  }
+
+  const filmStarsList = Array.from(filmStarsArray).join(', ');
+
+  return filmStarsList;
+};
+
+
+/*
  * *** Function to generate a film manufacture date
  */
-const getFilmManufactureDate = () => {
-  return getRandomInteger(MIN_MANUFACTURE_DATE, MAX_MANUFACTURE_DATE);
+const getFilmReleaseDate = () => {
+  const yearsGap = getRandomInteger(-YEARS_GAP, YEARS_GAP);
+  const releaseDate = dayjs().add(yearsGap, 'year').toDate();
+
+  return releaseDate;
 };
 
 
@@ -80,8 +183,28 @@ const getFilmManufactureDate = () => {
  * *** Function to generate a film duration (randomized with an error ±7 days)
  */
 const getFilmDuration = () => {
-  const daysGap = getRandomInteger(-MAX_DAYS_GAP, MAX_DAYS_GAP);
-  return dayjs().add(daysGap, 'day').toDate();
+  const hoursGap = getRandomInteger(-HOURS_GAP, HOURS_GAP);
+  const filmDuration = dayjs().add(hoursGap, 'hour').toDate();
+
+  return filmDuration;
+};
+
+
+/*
+ * *** Function to generate a film country
+ */
+const getFilmCountry = () => {
+  const filmCountry = [
+    'Россия',
+    'Америка',
+    'Япония',
+    'Англия',
+    'Бразилия',
+    'Австралия',
+    'Новая Зеландия',
+  ];
+
+  return filmCountry[getRandomInteger(FIRST_ARRAY_ELEMENT_INDEX, filmCountry.length - ARRAY_LENGTH_SHIFT)];
 };
 
 
@@ -107,27 +230,14 @@ const getFilmDescription = () => {
     fullFilmDescription += randomSentence + '. ';
   }
 
-
-  /*
-   * --- Checking the length of the movie description:
-   * --- if it more than 140 characters, the line is cut off
-   * --- and an ellipsis is added.
-   */
-  let filmDescription = fullFilmDescription.substr(FIRST_LETTER_INDEX, MAX_DESCRIPTION_LENGTH);
-  if (filmDescription.length < fullFilmDescription.length) {
-    filmDescription += ELLIPSIS;
-  } else {
-    filmDescription = fullFilmDescription;
-  }
-
-  return filmDescription;
+  return fullFilmDescription;
 };
 
 
 /*
  * *** Function to generate a random film genre
  */
-const generateFilmGenre = () => {
+const getFilmGenres = () => {
   const filmGenres = [
     'Фэнтези',
     'Экшн',
@@ -138,7 +248,35 @@ const generateFilmGenre = () => {
     'Военный',
   ];
 
-  return filmGenres[getRandomInteger(FIRST_ARRAY_ELEMENT_INDEX, filmGenres.length - ARRAY_LENGTH_SHIFT)];
+
+  /*
+   * --- Based on the existing array of stars (filmStars),
+   * --- create a new one using the «Set» object
+   */
+  const filmGenresArray = new Set();
+  const randomGenresListCount = getRandomInteger(MIN_STARS_COUNT, MAX_STARS_COUNT);
+
+
+  /*
+   * --- Using the add-method of the "Set" object, we generate an array of random stars.
+   * --- Due to the peculiarity of the add-method, only unique values appear inside the array.
+   */
+  for (let i = 0; i < randomGenresListCount; i++) {
+    const randomGenre = filmGenres[getRandomInteger(FIRST_ARRAY_ELEMENT_INDEX, filmGenres.length - ARRAY_LENGTH_SHIFT)];
+    filmGenresArray.add(randomGenre);
+  }
+
+  const filmGenresList = Array.from(filmGenresArray).join(', ');
+
+  return filmGenresList;
+};
+
+
+/*
+ * *** Function to generate a film age rating
+ */
+const getFilmAgeRating = () => {
+  return getRandomInteger(MIN_AGE_RATE, MAX_AGE_RATE) + '+';
 };
 
 
@@ -149,11 +287,17 @@ export const generateFilmCard = () => {
     alreadyWatched: isActive(),
     isFavorite: isActive(),
     name: generateFilmName(),
+    originalName: generateFilmName(),
     rate: getFilmRate(),
-    manufactureDate: getFilmManufactureDate(),
+    director: getFilmProducer(),
+    writers: getFilmScenarists(),
+    actors: getFilmStars(),
+    releaseDate: getFilmReleaseDate(),
     duration: getFilmDuration(),
-    genre: generateFilmGenre(),
+    country: getFilmCountry(),
+    genresList: getFilmGenres(),
     description: getFilmDescription(),
+    ageRating: getFilmAgeRating(),
     comments: [],
   };
 };
