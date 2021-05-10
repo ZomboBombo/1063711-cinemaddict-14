@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
-import { getRandomInteger, isActive } from '../utils.js';
+import { getRandomInteger, isActive, getRandomValuesList } from '../utils.js';
+import { generateComment } from './fake-data-comments.js';
 
 
 // ----------- CONSTANTS -----------
@@ -20,11 +21,16 @@ const MIN_STARS_COUNT = 2;
 const MAX_STARS_COUNT = 10;
 
 const YEARS_GAP = 60;
-
 const HOURS_GAP = 3;
+
+const MIN_GENRES_COUNT = 1;
+const MAX_GENRES_COUNT = 3;
 
 const MIN_AGE_RATE = 0;
 const MAX_AGE_RATE = 18;
+
+const MIN_COMMENTS_COUNT = 0;
+const MAX_COMMENTS_COUNT = 10;
 
 
 /*
@@ -104,26 +110,7 @@ const getFilmScenarists = () => {
     'Вуди Аллен',
   ];
 
-  /*
-   * --- Based on the existing array of scenarists (filmScenarists),
-   * --- create a new one using the «Set» object
-   */
-  const filmScenaristsArray = new Set();
-  const randomScenaristsListCount = getRandomInteger(MIN_SCENARISTS_COUNT, MAX_SCENARISTS_COUNT);
-
-
-  /*
-   * --- Using the add-method of the "Set" object, we generate an array of random scenarists.
-   * --- Due to the peculiarity of the add-method, only unique values appear inside the array.
-   */
-  for (let i = 0; i < randomScenaristsListCount; i++) {
-    const randomScenarist = filmScenarists[getRandomInteger(FIRST_ARRAY_ELEMENT_INDEX, filmScenarists.length - ARRAY_LENGTH_SHIFT)];
-    filmScenaristsArray.add(randomScenarist);
-  }
-
-  const filmScenaristsList = Array.from(filmScenaristsArray).join(', ');
-
-  return filmScenaristsList;
+  return getRandomValuesList(filmScenarists, MIN_SCENARISTS_COUNT, MAX_SCENARISTS_COUNT);
 };
 
 
@@ -145,26 +132,7 @@ const getFilmStars = () => {
     'Настасья Самбурская',
   ];
 
-  /*
-   * --- Based on the existing array of stars (filmStars),
-   * --- create a new one using the «Set» object
-   */
-  const filmStarsArray = new Set();
-  const randomStarsListCount = getRandomInteger(MIN_STARS_COUNT, MAX_STARS_COUNT);
-
-
-  /*
-   * --- Using the add-method of the "Set" object, we generate an array of random stars.
-   * --- Due to the peculiarity of the add-method, only unique values appear inside the array.
-   */
-  for (let i = 0; i < randomStarsListCount; i++) {
-    const randomStar = filmStars[getRandomInteger(FIRST_ARRAY_ELEMENT_INDEX, filmStars.length - ARRAY_LENGTH_SHIFT)];
-    filmStarsArray.add(randomStar);
-  }
-
-  const filmStarsList = Array.from(filmStarsArray).join(', ');
-
-  return filmStarsList;
+  return getRandomValuesList(filmStars, MIN_STARS_COUNT, MAX_STARS_COUNT);
 };
 
 
@@ -248,27 +216,7 @@ const getFilmGenres = () => {
     'Военный',
   ];
 
-
-  /*
-   * --- Based on the existing array of stars (filmStars),
-   * --- create a new one using the «Set» object
-   */
-  const filmGenresArray = new Set();
-  const randomGenresListCount = getRandomInteger(MIN_STARS_COUNT, MAX_STARS_COUNT);
-
-
-  /*
-   * --- Using the add-method of the "Set" object, we generate an array of random stars.
-   * --- Due to the peculiarity of the add-method, only unique values appear inside the array.
-   */
-  for (let i = 0; i < randomGenresListCount; i++) {
-    const randomGenre = filmGenres[getRandomInteger(FIRST_ARRAY_ELEMENT_INDEX, filmGenres.length - ARRAY_LENGTH_SHIFT)];
-    filmGenresArray.add(randomGenre);
-  }
-
-  const filmGenresList = Array.from(filmGenresArray).join(', ');
-
-  return filmGenresList;
+  return getRandomValuesList(filmGenres, MIN_GENRES_COUNT, MAX_GENRES_COUNT);
 };
 
 
@@ -277,6 +225,16 @@ const getFilmGenres = () => {
  */
 const getFilmAgeRating = () => {
   return getRandomInteger(MIN_AGE_RATE, MAX_AGE_RATE) + '+';
+};
+
+
+/*
+ * *** Function to generate a random film comments list
+ */
+const getFilmComments = () => {
+  const randomCommentsCount = getRandomInteger(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT);
+
+  return new Array(randomCommentsCount).fill().map(generateComment);
 };
 
 
@@ -298,6 +256,6 @@ export const generateFilmCard = () => {
     genresList: getFilmGenres(),
     description: getFilmDescription(),
     ageRating: getFilmAgeRating(),
-    comments: [],
+    comments: getFilmComments(),
   };
 };
