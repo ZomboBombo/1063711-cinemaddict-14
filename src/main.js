@@ -106,7 +106,6 @@ function onFilmCardClick (currentFilmCard) {
 
   filmAboutPopupCloseButton.addEventListener('click', onCloseButtonClick);
 
-
   /*
    * Film description popup rendering
    */
