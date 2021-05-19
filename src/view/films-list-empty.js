@@ -1,4 +1,4 @@
-import { generateElement } from '../utils.js';
+import AbstractView from './abstract.js';
 
 
 // *** Function for creating empty films list template  ***
@@ -8,27 +8,9 @@ const createEmptyFilmsListTemplate = () => {
           </section>`;
 };
 
-export default class EmptyFilmsList {
-  constructor () {
-    this._element = null;
-  }
 
-
+export default class EmptyFilmsList extends AbstractView {
   getTemplate () {
     return createEmptyFilmsListTemplate();
-  }
-
-
-  getElement () {
-    if (!this._element) {
-      this._element = generateElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-
-  removeElement () {
-    this._element = null;
   }
 }

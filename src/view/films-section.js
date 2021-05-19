@@ -1,4 +1,4 @@
-import { generateElement } from '../utils.js';
+import AbstractView from './abstract.js';
 
 
 // *** Function for creating films section template ***
@@ -7,27 +7,8 @@ const createFilmsSectionTemplate = () => {
 };
 
 
-export default class FilmsSection {
-  constructor () {
-    this._element = null;
-  }
-
-
+export default class FilmsSection extends AbstractView {
   getTemplate () {
     return createFilmsSectionTemplate();
-  }
-
-
-  getElement () {
-    if (!this._element) {
-      this._element = generateElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-
-  removeElement () {
-    this._element = null;
   }
 }
