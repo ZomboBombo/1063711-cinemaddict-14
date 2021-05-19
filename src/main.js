@@ -113,38 +113,38 @@ if (filmCards.length === ZERO_LENGTH) {
 
   // *** Handler for Film card elements click event ***
   const onFilmCardClick = (currentFilmCard) => {
-    const filmAboutPopupElement = new FilmAboutPopup(currentFilmCard).getElement();
-    const filmAboutPopupCloseButton = filmAboutPopupElement.querySelector('#film-details-close-btn');
+    const filmAboutPopupComponent = new FilmAboutPopup(currentFilmCard);
 
     // --- Handler for «Escape» keydown event ---
     const onEscPress = (evt) => {
       evt.preventDefault();
 
       if (evt.key === EscapeKey.FULL_NAME || evt.key === EscapeKey.ABBREVIATED_NAME) {
-        body.removeChild(filmAboutPopupElement);
+        filmAboutPopupComponent.getElement().remove();
+        filmAboutPopupComponent.removeElement();
+        filmAboutPopupComponent.removeCloseButtonClickHandler(onCloseButtonClick);
         body.classList.remove('hide-overflow');
-        filmAboutPopupCloseButton.removeEventListener('click', onCloseButtonClick);
         document.removeEventListener('keydown', onEscPress);
       }
     };
 
     // --- Handler for Popup close button click event ---
-    const onCloseButtonClick = (evt) => {
-      evt.preventDefault();
-
-      body.removeChild(filmAboutPopupElement);
+    const onCloseButtonClick = () => {
+      filmAboutPopupComponent.getElement().remove();
+      filmAboutPopupComponent.removeElement();
+      filmAboutPopupComponent.removeCloseButtonClickHandler(onCloseButtonClick);
       body.classList.remove('hide-overflow');
-      filmAboutPopupCloseButton.removeEventListener('click', onCloseButtonClick);
       document.removeEventListener('keydown', onEscPress);
     };
 
-    filmAboutPopupCloseButton.addEventListener('click', onCloseButtonClick);
+
+    filmAboutPopupComponent.addCloseButtonClickHandler(onCloseButtonClick);
     document.addEventListener('keydown', onEscPress);
 
     /*
      * Film description popup rendering
      */
-    body.appendChild(filmAboutPopupElement);
+    body.appendChild(filmAboutPopupComponent.getElement());
     body.classList.add('hide-overflow');
   };
 
@@ -196,26 +196,25 @@ if (filmCards.length === ZERO_LENGTH) {
    * *** Rendering of «Show more» button ***
    */
   if (filmCards.length > FilmsCount.MAX_SHOWN) {
-    renderElement(filmsListAll, new ShowMoreButtonView().getElement(), RenderPosition.BEFOREEND);
+    const showMoreButtonComponent = new ShowMoreButtonView();
+    renderElement(filmsListAll, showMoreButtonComponent.getElement(), RenderPosition.BEFOREEND);
 
     /*
      * *** The logic of displaying additional movie cards when you click on the "Show more" button ***
      */
-    const showMoreButton = document.querySelector('#show-more-button');
 
     // *** Function for event listener of "Show more" button ***
-    const showMoreFilmCards = (evt) => {
-      evt.preventDefault();
-
+    const onShowMoreButtonClick = () => {
       remainingFilmCardsRendering();
 
       if (copyOfFilmCardsArray.length === ZERO_LENGTH) {
-        showMoreButton.style = DISPLAY_NONE;
-        showMoreButton.removeEventListener('click', showMoreFilmCards);
+        showMoreButtonComponent.getElement().remove();
+        showMoreButtonComponent.removeElement();
+        showMoreButtonComponent.removeClickHandler(onShowMoreButtonClick);
       }
     };
 
-    showMoreButton.addEventListener('click', showMoreFilmCards);
+    showMoreButtonComponent.addClickHandler(onShowMoreButtonClick);
   }
 
 
