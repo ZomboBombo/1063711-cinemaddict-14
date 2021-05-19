@@ -117,10 +117,10 @@ if (filmCards.length === ZERO_LENGTH) {
     const filmAboutPopupCloseButton = filmAboutPopupElement.querySelector('#film-details-close-btn');
 
     // --- Handler for «Escape» keydown event ---
-    const onEscPress = (escPressEvt) => {
-      escPressEvt.preventDefault();
+    const onEscPress = (evt) => {
+      evt.preventDefault();
 
-      if (escPressEvt.key === EscapeKey.FULL_NAME || escPressEvt.key === EscapeKey.ABBREVIATED_NAME) {
+      if (evt.key === EscapeKey.FULL_NAME || evt.key === EscapeKey.ABBREVIATED_NAME) {
         body.removeChild(filmAboutPopupElement);
         body.classList.remove('hide-overflow');
         filmAboutPopupCloseButton.removeEventListener('click', onCloseButtonClick);
@@ -129,8 +129,8 @@ if (filmCards.length === ZERO_LENGTH) {
     };
 
     // --- Handler for Popup close button click event ---
-    const onCloseButtonClick = (closeEvt) => {
-      closeEvt.preventDefault();
+    const onCloseButtonClick = (evt) => {
+      evt.preventDefault();
 
       body.removeChild(filmAboutPopupElement);
       body.classList.remove('hide-overflow');
@@ -204,8 +204,8 @@ if (filmCards.length === ZERO_LENGTH) {
     const showMoreButton = document.querySelector('#show-more-button');
 
     // *** Function for event listener of "Show more" button ***
-    const showMoreFilmCards = (clickEvt) => {
-      clickEvt.preventDefault();
+    const showMoreFilmCards = (evt) => {
+      evt.preventDefault();
 
       remainingFilmCardsRendering();
 
