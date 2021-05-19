@@ -1,4 +1,5 @@
-import { humanizeDate, generateElement } from '../utils.js';
+import AbstractView from './abstract.js';
+import { humanizeDate } from '../utils.js';
 
 
 // ----------- CONSTANTS -----------
@@ -10,6 +11,7 @@ const FIRST_ARRAY_ELEMENT = 0;
 const GENRES_ELEMENTS_SPLITTER = ', ';
 
 
+// *** Function for creating film card template  ***
 const createFilmCardTemplate = (filmCard) => {
   const {
     poster,
@@ -78,8 +80,10 @@ const createFilmCardTemplate = (filmCard) => {
 };
 
 
-export default class FilmCard {
+export default class FilmCard extends AbstractView {
   constructor (filmCardElement) {
+    super();
+
     this._filmCardElement = filmCardElement;
     this._element = null;
   }
@@ -87,19 +91,5 @@ export default class FilmCard {
 
   getTemplate () {
     return createFilmCardTemplate(this._filmCardElement);
-  }
-
-
-  getElement () {
-    if (!this._element) {
-      this._element = generateElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-
-  removeElement () {
-    this._element = null;
   }
 }

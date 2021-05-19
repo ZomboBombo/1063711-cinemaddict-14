@@ -1,4 +1,4 @@
-import { generateElement } from '../utils.js';
+import AbstractView from './abstract.js';
 
 
 // *** Function for creating films list template  ***
@@ -15,8 +15,10 @@ const createFilmsListTemplate = (filmsListId, filmsListTitle) => {
 };
 
 
-export default class FilmsList {
+export default class FilmsList extends AbstractView {
   constructor (listId, listTitle) {
+    super();
+
     this._listId = listId;
     this._listTitle = listTitle;
     this._element = null;
@@ -25,19 +27,5 @@ export default class FilmsList {
 
   getTemplate () {
     return createFilmsListTemplate(this._listId, this._listTitle);
-  }
-
-
-  getElement () {
-    if (!this._element) {
-      this._element = generateElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-
-  removeElement () {
-    this._element = null;
   }
 }

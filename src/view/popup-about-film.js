@@ -1,13 +1,12 @@
-import { humanizeDate, generateElement } from '../utils.js';
+import AbstractView from './abstract.js';
+import { humanizeDate } from '../utils.js';
 
 
 // ----------- CONSTANTS -----------
 const GENRES_ELEMENTS_SPLITTER = ', ';
 
 
-/*
- * *** Function to create a genres list template
- */
+// *** Function to create a genres list template ***
 const createGenresListTemplate = (genre) => {
   return (
     `<span class="film-details__genre">${genre}</span>`
@@ -15,9 +14,7 @@ const createGenresListTemplate = (genre) => {
 };
 
 
-/*
- * *** Function to create a comments list template
- */
+// *** Function to create a comments list template ***
 const createCommentsListTemplate = (comment) => {
   const dateOfComment = humanizeDate(comment.date, 'YYYY/MM/DD HH:mm');
 
@@ -38,7 +35,7 @@ const createCommentsListTemplate = (comment) => {
   );
 };
 
-
+// *** Function to create a "About film" popup template ***
 const createPopupAboutFilmTemplate = (filmCard) => {
   const {
     poster,
@@ -196,8 +193,10 @@ const createPopupAboutFilmTemplate = (filmCard) => {
 };
 
 
-export default class FilmAboutPopup {
+export default class FilmAboutPopup extends AbstractView {
   constructor (filmCardElement) {
+    super();
+
     this._filmCardElement = filmCardElement;
     this._element = null;
   }
@@ -205,19 +204,5 @@ export default class FilmAboutPopup {
 
   getTemplate () {
     return createPopupAboutFilmTemplate(this._filmCardElement);
-  }
-
-
-  getElement () {
-    if (!this._element) {
-      this._element = generateElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-
-  removeElement () {
-    this._element = null;
   }
 }
