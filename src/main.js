@@ -17,7 +17,6 @@ import { renderElement, RenderPosition, removeComponent } from './utils/render.j
 const FIRST_ARRAY_ELEMENT = 0;
 const ZERO_LENGTH = 0;
 
-const DISPLAY_NONE = 'display: none';
 
 // *** Glossary for films count ***
 const FilmsCount = {
