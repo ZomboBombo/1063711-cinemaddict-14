@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { getRandomInteger, isActive, getRandomValuesList } from '../utils.js';
+import { getRandomInteger, getRandomValuesList } from '../utils/common.js';
 import { generateComment } from './fake-data-comments.js';
 
 
@@ -31,6 +31,12 @@ const MAX_AGE_RATE = 18;
 
 const MIN_COMMENTS_COUNT = 0;
 const MAX_COMMENTS_COUNT = 10;
+
+
+// *** Boolean flag: is property active... ***
+const isActive = () => {
+  return Boolean(getRandomInteger(0, 1));
+};
 
 
 /*

@@ -1,4 +1,4 @@
-import { generateElement } from '../utils.js';
+import { generateElement } from '../utils/render.js';
 
 
 export default class Abstract {

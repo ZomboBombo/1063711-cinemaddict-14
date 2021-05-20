@@ -1,5 +1,5 @@
 import AbstractView from './abstract.js';
-import { humanizeDate } from '../utils.js';
+import { humanizeDate } from '../utils/common.js';
 
 
 // ----------- CONSTANTS -----------

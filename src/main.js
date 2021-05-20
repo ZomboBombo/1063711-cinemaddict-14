@@ -10,7 +10,7 @@ import FilmAboutPopup from './view/popup-about-film.js';
 import { generateFilmCard } from './mock/fake-data-film-card.js';
 import { generateSiteMenu } from './mock/fake-data-site-menu.js';
 
-import { renderElement, RenderPosition } from './utils.js';
+import { renderElement, RenderPosition, removeComponent } from './utils/render.js';
 
 
 // ----------- CONSTANTS -----------
@@ -82,9 +82,9 @@ const copyOfFilmCardsArray = filmCards.slice();
  * 2) site menu;
  * 3) section for films list;
  */
-renderElement(siteHeader, new UserRankView().getElement(), RenderPosition.BEFOREEND);
-renderElement(siteMainContent, new SiteMenuView(siteMenuFilters).getElement(), RenderPosition.BEFOREEND);
-renderElement(siteMainContent, new FilmsSectionView().getElement(), RenderPosition.BEFOREEND);
+renderElement(siteHeader, new UserRankView(), RenderPosition.BEFOREEND);
+renderElement(siteMainContent, new SiteMenuView(siteMenuFilters), RenderPosition.BEFOREEND);
+renderElement(siteMainContent, new FilmsSectionView(), RenderPosition.BEFOREEND);
 
 
 /*
@@ -97,11 +97,11 @@ renderElement(siteMainContent, new FilmsSectionView().getElement(), RenderPositi
 const filmsSection = siteMainContent.querySelector('.films');
 
 if (filmCards.length === ZERO_LENGTH) {
-  renderElement(filmsSection, new EmptyFilmsListView().getElement(), RenderPosition.BEFOREEND);
+  renderElement(filmsSection, new EmptyFilmsListView(), RenderPosition.BEFOREEND);
 } else {
-  renderElement(filmsSection, new FilmsListView(FilmsListSection.allMovies.id, FilmsListSection.allMovies.title).getElement(), RenderPosition.BEFOREEND);
-  renderElement(filmsSection, new FilmsListView(FilmsListSection.topRated.id, FilmsListSection.topRated.title).getElement(), RenderPosition.BEFOREEND);
-  renderElement(filmsSection, new FilmsListView(FilmsListSection.mostCommented.id, FilmsListSection.mostCommented.title).getElement(), RenderPosition.BEFOREEND);
+  renderElement(filmsSection, new FilmsListView(FilmsListSection.allMovies.id, FilmsListSection.allMovies.title), RenderPosition.BEFOREEND);
+  renderElement(filmsSection, new FilmsListView(FilmsListSection.topRated.id, FilmsListSection.topRated.title), RenderPosition.BEFOREEND);
+  renderElement(filmsSection, new FilmsListView(FilmsListSection.mostCommented.id, FilmsListSection.mostCommented.title), RenderPosition.BEFOREEND);
 
 
   /*
@@ -120,8 +120,7 @@ if (filmCards.length === ZERO_LENGTH) {
       evt.preventDefault();
 
       if (evt.key === EscapeKey.FULL_NAME || evt.key === EscapeKey.ABBREVIATED_NAME) {
-        filmAboutPopupComponent.getElement().remove();
-        filmAboutPopupComponent.removeElement();
+        removeComponent(filmAboutPopupComponent);
         filmAboutPopupComponent.removeCloseButtonClickHandler(onCloseButtonClick);
         body.classList.remove('hide-overflow');
         document.removeEventListener('keydown', onEscPress);
@@ -130,8 +129,7 @@ if (filmCards.length === ZERO_LENGTH) {
 
     // --- Handler for Popup close button click event ---
     const onCloseButtonClick = () => {
-      filmAboutPopupComponent.getElement().remove();
-      filmAboutPopupComponent.removeElement();
+      removeComponent(filmAboutPopupComponent);
       filmAboutPopupComponent.removeCloseButtonClickHandler(onCloseButtonClick);
       body.classList.remove('hide-overflow');
       document.removeEventListener('keydown', onEscPress);
@@ -153,7 +151,7 @@ if (filmCards.length === ZERO_LENGTH) {
   const renderFilmCard = (cardsContainer, card) => {
     const filmCardComponent = new FilmCardView(card);
 
-    renderElement(cardsContainer, filmCardComponent.getElement(), RenderPosition.BEFOREEND);
+    renderElement(cardsContainer, filmCardComponent, RenderPosition.BEFOREEND);
 
     const filmCardPoster = filmCardComponent.getElement().querySelector('.film-card__poster');
     const filmCardTitle = filmCardComponent.getElement().querySelector('.film-card__title');
@@ -197,7 +195,7 @@ if (filmCards.length === ZERO_LENGTH) {
    */
   if (filmCards.length > FilmsCount.MAX_SHOWN) {
     const showMoreButtonComponent = new ShowMoreButtonView();
-    renderElement(filmsListAll, showMoreButtonComponent.getElement(), RenderPosition.BEFOREEND);
+    renderElement(filmsListAll, showMoreButtonComponent, RenderPosition.BEFOREEND);
 
     /*
      * *** The logic of displaying additional movie cards when you click on the "Show more" button ***
@@ -208,8 +206,7 @@ if (filmCards.length === ZERO_LENGTH) {
       remainingFilmCardsRendering();
 
       if (copyOfFilmCardsArray.length === ZERO_LENGTH) {
-        showMoreButtonComponent.getElement().remove();
-        showMoreButtonComponent.removeElement();
+        removeComponent(showMoreButtonComponent);
         showMoreButtonComponent.removeClickHandler(onShowMoreButtonClick);
       }
     };
